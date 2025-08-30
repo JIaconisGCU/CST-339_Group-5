@@ -1,0 +1,8 @@
+For eclipse:
+At the top, go to Window>Preferences, then go down General>Security>Secure Storage>Contents. If you have a default secure storage, delete it.
+Then go to File>Import, under Git choose Project from Git, Clone URI WITH SMART IMPORT, then copy and paste the repository URL into the URI box.
+To authenticate your account, you will need to generate a Personal Access Token (PAT) from GitHub. For mine, I made a classic token with all permissions and no expiration, and named it Eclipse. In Eclipse, put in your username and the code for the token as the password.
+  This might have some security concerns, I don't really understand the PAT system. You're of course welcome to investigate a safer and more appropriate way to generate one.
+Please do not import the MASTER branch of the repository, only the DEVELOPMENT branch.
+Verify that it is importing the project as Maven, then click Finish.
+Run Group5Application.java and go to localhost:8080 in a web browser. You should have the Hello World page. If so, you've successfully imported the project!
