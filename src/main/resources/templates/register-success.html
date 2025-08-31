@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><title>Registration Complete</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+</head>
+<body class="container py-4">
+  <div th:replace="fragments/navbar :: *"></div>
+
+  <h1>Registration Complete</h1>
+  <p>Your account was created. Please <a th:href="@{/login}">log in</a>.</p>
+</body>
+</html>

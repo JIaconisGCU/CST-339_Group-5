@@ -3,10 +3,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/common}">
+<head>
+    <title>Login</title>
+</head>
 <body>
 <section layout:fragment="content">
-  <h1>Login</h1>
-  <p>Coming in Milestone 2 (Login/Session Lead).</p>
+    <h2>Login</h2>
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+    </form>
 </section>
 </body>
 </html>
