@@ -1,4 +1,9 @@
 # CST-339 CLC Project – Milestone 2  
+https://github.com/JIaconisGCU/CST-339_Group-5
+
+---
+---
+
 **Role 1: Presentation / UX Lead**
 
 ---
@@ -212,4 +217,5 @@ CREATE INDEX idx_users_email ON users(email);
 
 ## Future Risks & Concerns
 - Temporary hard-coded username and password verification must be replaced with a verification system integrated with the user registration and database system.
+
 
