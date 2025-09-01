@@ -169,4 +169,47 @@ CREATE INDEX idx_users_email ON users(email);
 #### *Figure 3* Draft SQL DDL script for the *users* table with uniqueness contraints and timestamps.
 ---
 
+# CST-339 CLC Project – Milestone 2  
+**Justin Iaconis, Role 3: Login Function, Repository Manager**
+
+---
+
+## Cover Page – Tasks Completed by Role 3
+- Created project GitHub repository, with the "live" `master` branch and the `development` branch.
+- Built HTML page to provide login functionality with a submission form
+- Built `LoginController` class that provides mapping for the login page
+- `LoginController` can set and clear the user in the HTTP session.
+- Ensured the navbar updated appropriately based on if the user was logged in.
+- Resolved merging conflicts in the repositry.
+- Ensured the project was functional on every team members' machines after merging the `development` branch to the `master` branch.
+
+---
+
+## Planning Documentation (Role 3 perspective)
+- **Role split**: James handled Registration and User Management, Carlos handled the webpages, layout, and fragments, and Justin handled login functionality and managed the repository.  
+- **Workflow**:  
+  - Developed login logic in a separate feature branch (`justin/feature/login`).  
+  - Branch was pushed and merged with `development` branch after verifying readiness with other team members.  
+  - Managed repository as other team members submitted their features into the `development` branch.
+  - Coordinated with team members to fix any issues, such as conflicts while pushing to the repository.
+  - Worked with Role 1 to ensure the navbar fragment was responding correctly to the user's login status.
+  - Pulled the `development` branch's commits into the `master` branch.
+
+---
+
+## General Technical Approach (Update from Milestone 1)
+- Used **Thymeleaf forms** for binding and error display.
+- Used GitHub to maintain the project repository.
+
+---
+
+## Key Technical Design Decisions
+- Tied login information to HTTP session's attributes
+- If the user is not logged in, the session's `username` attribute will be null or empty, otherwise it will be their username.
+- All attributes are cleared upon logout.
+
+---
+
+## Future Risks & Concerns
+- Temporary hard-coded username and password verification must be replaced with a verification system integrated with the user registration and database system.
 
