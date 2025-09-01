@@ -14,6 +14,9 @@
 		</head>
 		<body class="d-flex flex-column min-vh-100">
 		<header class="border-bottom">
+			<div th:replace="fragments/navbar :: navbar"></div>
+		</header>
+		<!--<header class="border-bottom">
 			<nav class="navbar nacbar-expand-lg container">
 				<a class="navbar-brand fq-semibold" th:href="@{/}">VG Library</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
@@ -27,8 +30,8 @@
 					</ul>
 				</div>
 			</nav>
-		</header>
-		
+		</header>-->
+
 		<main class="container my-4" layout:fragment="content">
 			<!-- Child pages will inject their content here -->
 		</main>
@@ -41,4 +44,3 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 		</body>
 </html>
-	
