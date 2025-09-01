@@ -26,7 +26,7 @@ public class LoginController {
                                Model model) {
         if (username.equals(testUsername) && password.equals(testPassword)) {
             session.setAttribute("username", username);
-            return "redirect:/games";
+            return "redirect:/";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login";
