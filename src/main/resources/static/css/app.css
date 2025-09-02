@@ -1,2 +1,66 @@
-/* keep it plain for now */
-body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+body {
+    background: linear-gradient(to right, #1a1a1d, #4e4e50);
+    font-family: 'Roboto', sans-serif;
+    color: #f8f9fa;
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: 'Press Start 2P', cursive;
+    color: #ffd700;
+}
+
+.jumbotron {
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+}
+
+.btn-warning {
+    background-color: #ffcc00;
+    border: none;
+    font-weight: bold;
+    color: #000;
+}
+
+footer {
+    background-color: #008080; /* teal */
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+}
+
+.btn-teal {
+    background-color: #008080; /* teal */
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-teal:hover {
+    background-color: #006666; /* darker teal for hover */
+    color: #fff;
+}
+
+/* Navbar background */
+.navbar {
+    background-color: #1a1a1d !important; /* dark gray, same as page gradient */
+}
+
+/* Brand styling */
+.navbar-brand {
+    color: #008080 !important; /* teal */
+    font-family: 'Press Start 2P', cursive;
+}
+
+.navbar-brand:hover {
+    color: #00cccc !important; /* lighter teal hover */
+}
+
+/* Nav links (Login, Register) */
+.nav-link {
+    color: #f8f9fa !important; /* white text */
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #ffd700 !important; /* retro yellow */
+}
