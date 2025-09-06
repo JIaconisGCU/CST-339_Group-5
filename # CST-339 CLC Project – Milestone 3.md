@@ -1,10 +1,10 @@
-# CST-339 CLC Project – Milestone 2  
+# CST-339 CLC Project – Milestone 3  
 https://github.com/JIaconisGCU/CST-339_Group-5
 
 ---
 ---
 
-**Role 1: Presentation / UX Lead**
+**Carlos Cortes (Role 1): Presentation / UX Lead**
 
 ---
 
@@ -15,7 +15,16 @@ https://github.com/JIaconisGCU/CST-339_Group-5
 - Integrated teammates’ pages (`login.html`, `register.html`) into layout for consistent look and feel.  
 - Corrected Thymeleaf namespace issues to ensure layout processing.  
 - Ensured responsiveness works on desktop, tablet, and mobile (tested with Chrome DevTools).  
-- Verified UI consistency after resolving merge conflicts.  
+- Verified UI consistency after resolving merge conflicts.
+- **Milestone 3 Updates**:  
+  - Finalized global theme (teal + retro yellow color scheme, consistent fonts via Google Fonts).  
+  - Added logo (`GameLibrary.png`) and GOTY image (`GOY.png`) to homepage.  
+  - Styled homepage hero section with “Explore the Games” button.  
+  - Replaced button link to `/games` instead of `/products/new`.  
+  - Applied custom CSS in `app.css` for buttons, navbar, and footer.  
+  - Styled navbar with dark background, teal brand, white links, and yellow hover.  
+  - Added active link highlighting for current page.  
+  - Fixed footer visibility with dark background and contrast improvements.    
 
 ---
 
@@ -36,6 +45,9 @@ https://github.com/JIaconisGCU/CST-339_Group-5
 - Added **Thymeleaf Layout Dialect** to support reusable layout (`common.html`).  
 - Used **Bootstrap 5** (via CDN) for responsive design.  
 - Ensured all pages (`home`, `login`, `register`) extend `common.html` for consistency.  
+- **Milestone 3 Updates**
+     - Introduced **Google Fonts** (`Press Start 2P` and `Roboto`) for branding.  
+     - Applied **custom CSS (`app.css`)** for teal/yellow theme and footer contrast fixes.  
 
 ---
 
@@ -43,7 +55,9 @@ https://github.com/JIaconisGCU/CST-339_Group-5
 - Chose Thymeleaf Layout Dialect instead of copy/paste headers/footers → promotes reuse and maintainability.  
 - Implemented one **global navbar** with links to Home, Login, Register (to be adapted for authentication in later milestones).  
 - Chose Bootstrap’s grid system for responsiveness instead of custom CSS.  
-- Deleted `LoginRegisterController.java` to avoid duplicate mappings and errors, ensuring controllers map uniquely.  
+- Deleted `LoginRegisterController.java` to avoid duplicate mappings and errors, ensuring controllers map uniquely. 
+- **Milestone 3 Update**
+     - Created a dedicated `app.cs` to centralize color scheme, button styles, navbar, and footer.
 
 ---
 
@@ -55,7 +69,31 @@ https://github.com/JIaconisGCU/CST-339_Group-5
        <groupId>nz.net.ultraq.thymeleaf</groupId>
        <artifactId>thymeleaf-layout-dialect</artifactId>
    </dependency>
+   ```
+2. Place all static assets in src/main/resources/static
+     - CSS --> /css/app/css
+     - Images --> /img/GameLibrary.png, /img/GOY.png
+3. Run the application with mvn spring-boot:run or from your IDE.
+4. Access the homepage at http://localhost:8080/ and verify:
+     - Logo and GOTY images display correctly.
+     - Navbar links (Home, Login, and Register) appear styled.
+     - "Explore the Games" button links to /games.
+     - Footer text visible against background.
 
+## User Interface Diagrams
+
+### Homepage Wireframe
+
+```mermaid
+flowchart TB
+    A[Logo - GameLibrary.png] --> B[Hero Section]
+    B --> C[Explore the Games Button - /games]
+    B --> D[Intro Text: Explore GOTY winners across genres]
+    B --> E[Background styling with dark theme and fonts]
+
+    C --> F[GOTY Image - GOY.png]
+    F --> G[Developer Info Card - About the Developers]
+```
 ---
 ---
 
@@ -217,5 +255,6 @@ CREATE INDEX idx_users_email ON users(email);
 
 ## Future Risks & Concerns
 - Temporary hard-coded username and password verification must be replaced with a verification system integrated with the user registration and database system.
+
 
 
