@@ -94,7 +94,24 @@ flowchart TB
     C --> F[GOTY Image - GOY.png]
     F --> G[Developer Info Card - About the Developers]
 ```
+## Sitemap Diagram
+
+```mermaid
+flowchart TD
+    A[Home Page] --> B[Login Page]
+    A --> C[Register Page]
+    A --> D[Games Page]
+
+    D --> E[Product Creation Page]
+```
 ---
+
+## Known Issues (Role 1 perspective)
+- Product data and Games page are not yet implemented (planned for future milestones).  
+- Images must be placed in the correct `/static/img` directory; incorrect paths may cause broken images.  
+- Footer readability depends on background contrast; adjusted with dark background fix, but may need further testing on different displays.  
+- Navbar active link highlighting may not always reflect correctly if new routes are added without updating `navbar.html`.  
+
 ---
 
 # CST-339 CLC Project – Milestone 2  
@@ -255,6 +272,7 @@ CREATE INDEX idx_users_email ON users(email);
 
 ## Future Risks & Concerns
 - Temporary hard-coded username and password verification must be replaced with a verification system integrated with the user registration and database system.
+
 
 
 
