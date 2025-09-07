@@ -1,9 +1,11 @@
 package com.gcu.cst339_group5.user;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,10 +23,19 @@ public class RegisterController {
         this.store = store;
     }
 
+    /** Trim incoming String fields; convert empty strings to null */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
     // Show empty form
     @GetMapping
     public String form(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("pageTitle", "Register");
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new User());
+        }
         return "register";
     }
 
@@ -34,14 +45,14 @@ public class RegisterController {
                           BindingResult result,
                           Model model) {
 
-        // Run uniqueness checks only if field-level validation passed
-        if (!result.hasErrors()) {
-            if (store.usernameExists(user.getUsername())) {
-                result.rejectValue("username", "duplicate", "Username already taken");
-            }
-            if (store.emailExists(user.getEmail())) {
-                result.rejectValue("email", "duplicate", "Email already registered");
-            }
+        model.addAttribute("pageTitle", "Register");
+
+        // Run uniqueness checks only if those fields passed basic validation
+        if (!result.hasFieldErrors("username") && store.usernameExists(user.getUsername())) {
+            result.rejectValue("username", "taken", "Username is already taken");
+        }
+        if (!result.hasFieldErrors("email") && store.emailExists(user.getEmail())) {
+            result.rejectValue("email", "taken", "Email is already registered");
         }
 
         // On any error, re-render form with messages
@@ -49,10 +60,10 @@ public class RegisterController {
             return "register";
         }
 
-        // Save to our dev store (plain password for now)
+        // Save to our dev store (plain password for Week 3)
         store.save(user);
 
-        // Redirect to login so Justin's code can set HttpSession on successful login
+        // Redirect to login so session can be set after successful login
         return "redirect:/login?registered=1";
     }
 }
