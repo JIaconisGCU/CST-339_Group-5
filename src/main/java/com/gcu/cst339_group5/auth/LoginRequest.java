@@ -7,6 +7,7 @@ public record LoginRequest(
 	    @NotBlank(message = "Password is required") String password
 	) {}
 
+//@Deprecated
 //public class LoginRequest {
 //    @NotBlank(message = "Username is required")
 //    private String username;

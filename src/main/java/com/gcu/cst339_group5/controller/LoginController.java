@@ -1,6 +1,7 @@
 package com.gcu.cst339_group5.controller;
 
-import com.gcu.cst339_group5.auth.AuthService;
+import com.gcu.cst339_group5.auth.IAuthenticatorService;
+import com.gcu.cst339_group5.auth.LoginRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +13,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Handles login without a form-backing object.
  * Reads username/password directly from request params posted by login.html.
- * Week 3: TODO currently only uses session flag instead of Spring Security.
+ * Week 3: TODO currently only uses HttpSession attribute flag instead of Spring Security.
  */
 @Controller
 public class LoginController {
 
-    private final AuthService auth;
+	// Authenticator bean
+    private final IAuthenticatorService auth;
 
-    // Constructor injection (Spring Core / DI)
-    public LoginController(AuthService auth) {
+    // Constructor with authenticator service injection (Spring Core / DI)
+    public LoginController(IAuthenticatorService auth) {
         this.auth = auth;
     }
 
@@ -39,13 +41,17 @@ public class LoginController {
                          Model m,
                          RedirectAttributes ra) {
 
-        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+        LoginRequest req = new LoginRequest(username, password);
+    	
+    	// Require both fields
+        if (req.username() == null || req.username().isBlank() || req.password() == null || req.password().isBlank()) {
             m.addAttribute("pageTitle", "Login");
             m.addAttribute("error", "Username and password are required");
             return "login";
         }
-
-        if (!auth.authenticate(username, password)) {
+        
+        // Use authenticator service to verify 
+        if (!auth.authenticate(req)) {
             m.addAttribute("pageTitle", "Login");
             m.addAttribute("error", "Invalid username or password");
             return "login";
@@ -53,7 +59,7 @@ public class LoginController {
 
         session.setAttribute("username", username);
         ra.addFlashAttribute("message", "Welcome, " + username + "!");
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     /** Optional: simple logout endpoint */

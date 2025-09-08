@@ -5,7 +5,7 @@ import com.gcu.cst339_group5.user.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimpleRegistrationService implements RegistrationService {
+public class SimpleRegistrationService implements IRegistrationService {
     private final InMemoryUserStore store;
 
     public SimpleRegistrationService(InMemoryUserStore store) {
