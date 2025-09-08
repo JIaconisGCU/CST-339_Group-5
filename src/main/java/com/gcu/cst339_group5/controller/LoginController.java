@@ -1,4 +1,4 @@
-package com.gcu.cst339_group5;
+package com.gcu.cst339_group5.controller;
 
 import com.gcu.cst339_group5.auth.AuthService;
 import jakarta.servlet.http.HttpSession;
@@ -6,14 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Handles login without a form-backing object.
  * Reads username/password directly from request params posted by login.html.
- * Week 3: simple session flag instead of Spring Security.
+ * Week 3: TODO currently only uses session flag instead of Spring Security.
  */
 @Controller
 public class LoginController {
@@ -54,7 +53,7 @@ public class LoginController {
 
         session.setAttribute("username", username);
         ra.addFlashAttribute("message", "Welcome, " + username + "!");
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     /** Optional: simple logout endpoint */
@@ -65,4 +64,3 @@ public class LoginController {
         return "redirect:/login";
     }
 }
-

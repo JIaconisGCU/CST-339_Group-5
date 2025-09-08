@@ -1,4 +1,4 @@
-package com.gcu.cst339_group5;
+package com.gcu.cst339_group5.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

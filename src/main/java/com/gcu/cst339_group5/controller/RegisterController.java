@@ -1,4 +1,4 @@
-package com.gcu.cst339_group5.user;
+package com.gcu.cst339_group5.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -7,6 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import com.gcu.cst339_group5.user.InMemoryUserStore;
+import com.gcu.cst339_group5.user.User;
 
 /**
  * Handles the /register flow:
