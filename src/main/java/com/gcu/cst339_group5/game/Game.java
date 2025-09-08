@@ -1,14 +1,26 @@
 package com.gcu.cst339_group5.game;
 
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.PastOrPresent;
 
 public class Game {
-	private String title;
-	private String developer;
-	private String publisher;
-	private LocalDate releaseDate;
 	
-	
+	@NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title must be at most 100 characters")
+    private String title;
+
+    @NotBlank(message = "Developer is required")
+    @Size(max = 100, message = "Developer must be at most 100 characters")
+    private String developer;
+
+    @NotBlank(message = "Publisher is required")
+    @Size(max = 100, message = "Publisher must be at most 100 characters")
+    private String publisher;
+
+    @PastOrPresent(message = "Release date cannot be in the future")
+    private LocalDate releaseDate;
 	
 	public String getTitle() {
 		return title;

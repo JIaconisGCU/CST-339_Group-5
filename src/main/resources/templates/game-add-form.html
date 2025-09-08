@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/common}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Game</title>
+</head>
+<body>
+<section layout:fragment="content" class="container py-4">
+
+    <h1 class="mb-3">Add a Game to the Library</h1>
+
+    <form th:action="@{/games}" th:object="${game}" method="post" class="row g-3 needs-validation">
+
+        <!-- Title -->
+        <div class="col-md-6">
+            <label class="form-label">Title</label>
+            <input class="form-control" th:field="*{title}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <!-- Release Date -->
+        <div class="col-md-6">
+            <label class="form-label">Release Date</label>
+            <input class="form-control" type="date" th:field="*{releaseDate}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></div>
+        </div>
+
+        <!-- Developer -->
+        <div class="col-md-6">
+            <label class="form-label">Developer</label>
+            <input class="form-control" th:field="*{developer}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}"></div>
+        </div>
+
+        <!-- Publisher -->
+        <div class="col-md-6">
+            <label class="form-label">Publisher</label>
+            <input class="form-control" th:field="*{publisher}" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Add Game</button>
+            <a class="btn btn-secondary" th:href="@{/games}">Cancel</a>
+        </div>
+
+    </form>
+</section>
+</body>
+</html>
