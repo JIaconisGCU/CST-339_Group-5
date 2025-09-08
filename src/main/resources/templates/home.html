@@ -8,9 +8,39 @@
 </head>
 <body>
 <section layout:fragment="content">
-  <h1 class="mb-3">Welcome to the Video Game Library</h1>
-  <p class="lead">Track “Game of the Year” winners by genre.</p>
-  <p class="text-muted">We’ll add style and real data in later milestones.</p>
+
+  <!-- Logo -->
+  <div class="text-center mt-4">
+    <img src="/img/logo.png" alt="Video Game Library Logo" 
+	style="width:180px; opacity:0.95;">
+  </div>
+
+  <!-- Hero Section -->
+  <div class="jumbotron bg-dark text-light text-center" 
+       style="opacity:0.9; border-radius:20px; padding:2rem;">
+    <h1 class="display-4">Welcome to the Video Game Library</h1>
+    <p class="lead">Explore the top Game of the Year winners across genres.</p>
+	<a href="/games" class="btn btn-teal btn-lg">Explore the Games</a>
+  </div>
+
+  <!-- GOTY Image -->
+  <div class="text-center mt-5">
+    <img src="/img/GOY.png" alt="Game of the Year Trophy" 
+	style="width:250px; opacity:0.9;">
+  </div>
+
+  <!-- Developer Info -->
+  <div class="card mt-5 shadow-lg" style="max-width:700px; margin:auto;">
+    <div class="card-body text-center">
+      <h3 class="card-title">About the Developers</h3>
+      <p class="card-text">
+        This project was built by passionate developers who love gaming and want to share 
+        the history of the greatest games with fans. Follow along as we build a 
+        complete application with modern tools like Spring Boot, Thymeleaf, and Bootstrap.
+      </p>
+    </div>
+  </div>
+
 </section>
 </body>
 </html>

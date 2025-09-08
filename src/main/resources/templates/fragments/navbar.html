@@ -14,19 +14,18 @@
       </li>
 
       <!-- Logged in -->
-      <li class="nav-item dropdown" th:if="${session.username != null}">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-          th:text="'Welcome, ' + ${session.username}">Welcome</a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" th:href="@{/games}">Games</a></li>
-          <li><hr class="dropdown-divider"/></li>
-          <li>
-            <form th:action="@{/logout}" method="get" class="px-3">
-              <button class="btn btn-link p-0" type="submit">Logout</button>
-            </form>
-          </li>
-        </ul>
-      </li>
+	  <li class="nav-item dropdown" th:if="${session.username != null}">
+	    <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button"
+	       data-bs-toggle="dropdown" aria-expanded="false"
+	       th:text="'Welcome, ' + ${session.username}">Welcome</a>
+	    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+	      <li><a class="dropdown-item" th:href="@{/games}">Games</a></li>
+	      <li><hr class="dropdown-divider"/></li>
+	      <li><a class="dropdown-item" th:href="@{/games/new}">Add Game</a></li>
+	      <li><hr class="dropdown-divider"/></li>
+	      <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+	    </ul>
+	  </li>
       
     </ul>
   </div>
