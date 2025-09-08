@@ -44,7 +44,7 @@ public class LoginController {
         LoginRequest req = new LoginRequest(username, password);
     	
     	// Require both fields
-        if (req.username() == null || req.username().isBlank() || req.password() == null || req.password().isBlank()) {
+        if (req.isIncomplete()) {
             m.addAttribute("pageTitle", "Login");
             m.addAttribute("error", "Username and password are required");
             return "login";
