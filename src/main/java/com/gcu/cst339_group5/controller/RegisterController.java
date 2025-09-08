@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import com.gcu.cst339_group5.user.InMemoryUserStore;
+import com.gcu.cst339_group5.user.IUserStore;
 import com.gcu.cst339_group5.user.User;
 
 /**
@@ -20,9 +20,9 @@ import com.gcu.cst339_group5.user.User;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private final InMemoryUserStore store;
+    private final IUserStore store;
 
-    public RegisterController(InMemoryUserStore store) {
+    public RegisterController(IUserStore store) {
         this.store = store;
     }
 

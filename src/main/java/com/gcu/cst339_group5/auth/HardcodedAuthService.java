@@ -1,5 +1,6 @@
 package com.gcu.cst339_group5.auth;
 
+import com.gcu.cst339_group5.user.IUserStore;
 import com.gcu.cst339_group5.user.InMemoryUserStore;
 import com.gcu.cst339_group5.user.User;
 import org.springframework.stereotype.Service;
@@ -7,11 +8,9 @@ import org.springframework.stereotype.Service;
 // TODO encryption (after week 3)
 @Service
 public class HardcodedAuthService implements IAuthenticatorService {
-    private final InMemoryUserStore store;
+    private final IUserStore store = new InMemoryUserStore();
     
-    public HardcodedAuthService(InMemoryUserStore store) {
-        this.store = store; 
-        
+    public HardcodedAuthService() {
         //TEMP demo account #1
         if (!store.usernameExists("admin")) {
             User u = new User();

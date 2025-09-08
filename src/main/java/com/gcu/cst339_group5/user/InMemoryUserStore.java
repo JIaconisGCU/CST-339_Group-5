@@ -10,26 +10,30 @@ import java.util.concurrent.ConcurrentHashMap;
  * Swap with a real DB repo later (JDBC/JPA).
  */
 @Component
-public class InMemoryUserStore {
+public class InMemoryUserStore implements IUserStore {
 
-    // Lookup by lowercase username/email to make checks case-insensitive
+    // Collection objects to make up database are stored in local memory
     private final Map<String, User> byUsername = new ConcurrentHashMap<>();
     private final Map<String, User> byEmail = new ConcurrentHashMap<>();
 
-    public boolean usernameExists(String username) {
+    @Override
+	public boolean usernameExists(String username) {
         return username != null && byUsername.containsKey(username.toLowerCase());
     }
 
-    public boolean emailExists(String email) {
+    @Override
+	public boolean emailExists(String email) {
         return email != null && byEmail.containsKey(email.toLowerCase());
     }
 
-    public void save(User u) {
+    @Override
+	public void save(User u) {
         byUsername.put(u.getUsername().toLowerCase(), u);
         byEmail.put(u.getEmail().toLowerCase(), u);
     }
 
-    public User findByUsername(String username) {
+    @Override
+	public User findByUsername(String username) {
         return username == null ? null : byUsername.get(username.toLowerCase());
     }
 }

@@ -1,14 +1,14 @@
 package com.gcu.cst339_group5.auth;
 
-import com.gcu.cst339_group5.user.InMemoryUserStore;
+import com.gcu.cst339_group5.user.IUserStore;
 import com.gcu.cst339_group5.user.User;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SimpleRegistrationService implements IRegistrationService {
-    private final InMemoryUserStore store;
+    private final IUserStore store;
 
-    public SimpleRegistrationService(InMemoryUserStore store) {
+    public SimpleRegistrationService(IUserStore store) {
         this.store = store;
     }
 
