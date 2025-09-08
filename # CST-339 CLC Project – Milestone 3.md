@@ -275,51 +275,54 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 ---
 ---
 
-# CST-339 CLC Project – Milestone 2  
-**Justin Iaconis, Role 3: Login Function, Repository Manager**
+# CST-339 CLC Project – Milestone 3  
+**Justin Iaconis, Role 3: Data/Domain Lead, Repository Manager**
 
 ---
 
 ## Cover Page – Tasks Completed by Role 3
-- Created project GitHub repository, with the "live" `master` branch and the `development` branch.
-- Built HTML page to provide login functionality with a submission form
-- Built `LoginController` class that provides mapping for the login page
-- `LoginController` can set and clear the user in the HTTP session.
-- Ensured the navbar updated appropriately based on if the user was logged in.
-- Resolved merging conflicts in the repositry.
-- Ensured the project was functional on every team members' machines after merging the `development` branch to the `master` branch.
+- Refactored login logic to use a record object to manage the login request
+- Refactored code to extract interfaces to generalize functionality
+- Designed a container object for a 'product' page for video game library entries
+- Designed an HTML webpage with a form to allow users to design and instantiate Game container objects
+- Integrated Boostrap & Thymeleaf into aformentioned webpage to allow posting of said container objects
 
 ---
 
 ## Planning Documentation (Role 3 perspective)
-- **Role split**: James handled Registration and User Management, Carlos handled the webpages, layout, and fragments, and Justin handled login functionality and managed the repository.  
+- **Role split**: Carlos was the UI Lead, James was the Business Logic Lead, and Justin as the Data Lead.  
 - **Workflow**:  
-  - Developed login logic in a separate feature branch (`justin/feature/login`).  
-  - Branch was pushed and merged with `development` branch after verifying readiness with other team members.  
-  - Managed repository as other team members submitted their features into the `development` branch.
-  - Coordinated with team members to fix any issues, such as conflicts while pushing to the repository.
-  - Worked with Role 1 to ensure the navbar fragment was responding correctly to the user's login status.
-  - Pulled the `development` branch's commits into the `master` branch.
+  - Developed in a separate feature branch.
+  - Reworked the login logic to implement the `LoginRequest.java` record
+  - Generalized functionality by pulling the `IAuthenticatorService` interface from `HardcodedAuthService`
+  - Generalized functionality by pulling the `IUserStore` interface from `InMemoryUserStore`
+  - Generalized functionality by pulling the `IRegistrationService` interface from `SimpleRegistrationService`
+  - Designed the `Game.java` container class
+  - Designed the `game-add-form.html` template
+  - Designed the `GameAddController.java` class to integrate the previous two developments together
+  - Feature branch was pushed and merged with `development` branch after verifying readiness with other team members.
+  - Pulled the `development` branch's commits into the `master` branch, handling any errors.
 
 ---
 
-## General Technical Approach (Update from Milestone 1)
-- Used **Thymeleaf forms** for binding and error display.
-- Used GitHub to maintain the project repository.
+## General Technical Approach
+- Used Thymeleaf forms for binding and error display, and service and component injection
+- Used GitHub to maintain the project repository
+- Used Jakarta for form validation
 
 ---
 
 ## Key Technical Design Decisions
-- Tied login information to HTTP session's attributes
-- If the user is not logged in, the session's `username` attribute will be null or empty, otherwise it will be their username.
-- All attributes are cleared upon logout.
+- Login information is still tied to the HTTP session's attributes
+  - If the user is not logged in, the session's `username` attribute will be null or empty, otherwise it will be their username.
+- A `LoginRequest` record object can be used to store indeterminant data beyond what is expected or required by any one function
+  - For example, a "time of request" field can be added to the record object easily
+- Extracting the interfaces allows their methodology to be updated or replaced without any issues from tight coupling
+  - This will be especially important when databases and encryption methods are implemented
 
 ---
 
 ## Future Risks & Concerns
-- Temporary hard-coded username and password verification must be replaced with a verification system integrated with the user registration and database system.
-
-
-
-
-
+- When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
+  - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
+- When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
