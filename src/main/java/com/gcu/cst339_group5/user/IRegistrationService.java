@@ -1,6 +1,4 @@
-package com.gcu.cst339_group5.auth;
-
-import com.gcu.cst339_group5.user.User;
+package com.gcu.cst339_group5.user;
 
 public interface IRegistrationService {
     /**

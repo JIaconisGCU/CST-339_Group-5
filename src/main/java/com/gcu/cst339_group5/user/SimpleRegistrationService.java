@@ -1,7 +1,5 @@
-package com.gcu.cst339_group5.auth;
+package com.gcu.cst339_group5.user;
 
-import com.gcu.cst339_group5.user.IUserStore;
-import com.gcu.cst339_group5.user.User;
 import org.springframework.stereotype.Service;
 
 @Service
