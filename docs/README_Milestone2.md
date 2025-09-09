@@ -1,5 +1,5 @@
 # CST-339 CLC Project – Milestone 2  
-**Role 1: Presentation / UX Lead**
+**Carlos Cortes, Role 1: Presentation / UX Lead**
 
 ---
 
