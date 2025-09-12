@@ -1,117 +1,119 @@
-# CST-339 CLC Project – Milestone 3  
-https://github.com/JIaconisGCU/CST-339_Group-5
-
----
----
-
-**Carlos Cortes (Role 1): Presentation / UX Lead**
+# CST-339 CLC Project – Milestone 4  
+**Carlos Cortes Role 1: Presentation / UX Lead (assisting with Persistence Layer this Milestone)**
 
 ---
 
 ## Cover Page – Tasks Completed by Role 1
-- Created global Thymeleaf layout (`common.html`) with Bootstrap integration.  
-- Implemented responsive navbar with links to Home, Login, Register.  
-- Built `home.html` page extending the layout.  
-- Integrated teammates’ pages (`login.html`, `register.html`) into layout for consistent look and feel.  
-- Corrected Thymeleaf namespace issues to ensure layout processing.  
-- Ensured responsiveness works on desktop, tablet, and mobile (tested with Chrome DevTools).  
-- Verified UI consistency after resolving merge conflicts.
-- **Milestone 3 Updates**:  
-  - Finalized global theme (teal + retro yellow color scheme, consistent fonts via Google Fonts).  
-  - Added logo (`GameLibrary.png`) and GOTY image (`GOY.png`) to homepage.  
-  - Styled homepage hero section with “Explore the Games” button.  
-  - Replaced button link to `/games` instead of `/products/new`.  
-  - Applied custom CSS in `app.css` for buttons, navbar, and footer.  
-  - Styled navbar with dark background, teal brand, white links, and yellow hover.  
-  - Added active link highlighting for current page.  
-  - Fixed footer visibility with dark background and contrast improvements.    
+- Refactored **User module** (Login + Registration) to use **Spring Data JDBC** instead of in-memory services.  
+- Added **`UserRepository`** (CrudRepository) and **`UserService`** for persistence.  
+- Updated **`RegisterController`** and **`LoginController`** to use the new service.  
+- Created and verified **`schema.sql`** for automatic table creation (`users` table).  
+- Created **`data.sql`** with a safe test user for login validation.  
+- Configured **`application.properties`** to connect to MySQL (`videogamesdb` on port 8889).  
+- Fixed login redirect issue (now routes to `/` instead of `/home`).  
+- Tested end-to-end: user registration saves to DB and login authenticates correctly.  
 
 ---
 
 ## Planning Documentation (Role 1 perspective)
-- **Role split**: Carlos handled Presentation/UX (common layout, Home page, navbar, responsive testing). Teammates handled Registration and Login controllers + forms.  
+- Carlos (Role 1 – Presentation/UX, assisting Persistence)** | - Refactored **User module** (Login + Registration) to Spring Data JDBC<br>- Created `UserRepository` and `UserService`<br>- Updated `RegisterController` and `LoginController` to use DB<br>- Added and tested `schema.sql` and `data.sql` (users table + test user)<br>- Fixed login redirect to `/` 
+**Teammate A (Role 2 – Business/Service Layer)** | - Refactor **Product Creation module** to Spring Data JDBC<br>- Create `Game` entity, `GameRepository`, and `GameService`<br>- Update `GameAddController` to save new products to DB<br>- Extend `schema.sql` to include `games` table<br>- Add sample game row in `data.sql` 
+**Teammate B (Role 3 – Database/Documentation)** | - Finalize **schema.sql** (both `users` and `games` tables)<br>- Add safe insert test data in `data.sql`<br>- Create and update **ER Diagram** (users + games)<br>- Provide **DDL scripts** for report<br>- Help update Design Report (technical decisions, risks, diagrams) 
+
 - **Workflow**:  
   - Each teammate developed in local branch.  
   - All code merged to `development` branch on GitHub.  
   - Merge conflicts were resolved, prioritizing:  
     - Role 1 for layout/UI code.  
-    - Role 2 & 3 for Registration/Login controllers.  
+    - Role 2 & 3 for Registration/Login controllers. 
+
 - **Peer review**: teammates reviewed layout changes and tested in browsers before merging.  
 
 ---
 
-## General Technical Approach (Update from Milestone 1)
-- Used **Spring Boot 3.5.5** with **Thymeleaf** for dynamic views.  
-- Added **Thymeleaf Layout Dialect** to support reusable layout (`common.html`).  
-- Used **Bootstrap 5** (via CDN) for responsive design.  
-- Ensured all pages (`home`, `login`, `register`) extend `common.html` for consistency.  
-- **Milestone 3 Updates**
-     - Introduced **Google Fonts** (`Press Start 2P` and `Roboto`) for branding.  
-     - Applied **custom CSS (`app.css`)** for teal/yellow theme and footer contrast fixes.  
+## General Technical Approach (Updated from Milestones 1–3)
+- Application now integrates with **MySQL** via **Spring Data JDBC**.  
+- Entities (`User`, `Game`) annotated with `@Table` and `@Id` for persistence.  
+- Repositories extend `CrudRepository` to provide CRUD and custom query methods.  
+- Services (`UserService`, upcoming `GameService`) encapsulate business logic.  
+- `schema.sql` and `data.sql` initialize database schema and test data.  
+- **Milestone 4 Update**:  
+  - Refactored Login & Registration controllers to persist data in MySQL.  
+  - Configured `application.properties` for DB connection (port 8889).  
+  - Verified DB initialization and user persistence with MySQL Workbench. 
 
 ---
 
 ## Key Technical Design Decisions
-- Chose Thymeleaf Layout Dialect instead of copy/paste headers/footers → promotes reuse and maintainability.  
-- Implemented one **global navbar** with links to Home, Login, Register (to be adapted for authentication in later milestones).  
-- Chose Bootstrap’s grid system for responsiveness instead of custom CSS.  
-- Deleted `LoginRegisterController.java` to avoid duplicate mappings and errors, ensuring controllers map uniquely. 
-- **Milestone 3 Update**
-     - Created a dedicated `app.cs` to centralize color scheme, button styles, navbar, and footer.
+- Chose **Spring Data JDBC** (lighter than JPA/Hibernate) for simplified persistence mapping.  
+- Moved away from in-memory services (`InMemoryUserStore`, `SimpleRegistrationService`, `HardcodedAuthService`) → deleted to prevent confusion.  
+- Added `IF NOT EXISTS` to schema.sql to prevent app crash if tables already exist.  
+- Used safe insert in data.sql (`WHERE NOT EXISTS`) to avoid duplicate test user rows.  
+- Standardized redirect flow: Login success redirects to `/` where `HomeController` already handles root.  
 
 ---
 
-## Install / Configuration Instructions (for layout work)
-1. Ensure the following dependency exists in `pom.xml`:  
+## Install / Configuration Instructions (for User module)
+1. Ensure dependencies exist in `pom.xml`:  
 
    ```xml
+   <!-- Spring Data JDBC -->
    <dependency>
-       <groupId>nz.net.ultraq.thymeleaf</groupId>
-       <artifactId>thymeleaf-layout-dialect</artifactId>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-data-jdbc</artifactId>
    </dependency>
-   ```
-2. Place all static assets in src/main/resources/static
-     - CSS --> /css/app/css
-     - Images --> /img/GameLibrary.png, /img/GOY.png
-3. Run the application with mvn spring-boot:run or from your IDE.
-4. Access the homepage at http://localhost:8080/ and verify:
-     - Logo and GOTY images display correctly.
-     - Navbar links (Home, Login, and Register) appear styled.
-     - "Explore the Games" button links to /games.
-     - Footer text visible against background.
 
-## User Interface Diagrams
-
-### Homepage Wireframe
-
-```mermaid
-flowchart TB
-    A[Logo - GameLibrary.png] --> B[Hero Section]
-    B --> C[Explore the Games Button - /games]
-    B --> D[Intro Text: Explore GOTY winners across genres]
-    B --> E[Background styling with dark theme and fonts]
-
-    C --> F[GOTY Image - GOY.png]
-    F --> G[Developer Info Card - About the Developers]
+   <!-- MySQL Connector -->
+   <dependency>
+       <groupId>mysql</groupId>
+       <artifactId>mysql-connector-java</artifactId>
+       <version>8.0.33</version>
+       <scope>runtime</scope>
+   </dependency>
+2. Create MySQL database:
+```sql
+CREATE DATABASE videogamesbd;
 ```
-## Sitemap Diagram
+3. Verify schema.sql exists in src/main/resources/:
+```sql
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    username VARCHAR(30) NOT NULL UNIQUE,
+    password VARCHAR(72) NOT NULL
+);
+```
+4. Verify data.sql exists in src/main/resources/:
+```sql
+INSERT INTO users (first_name, last_name, email, phone, username, password)
+SELECT 'Test', 'User', 'test@example.com', '123-456-7890', 'testuser', 'password123'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'testuser');
+```
+5. Run the app http://localhost:8080/register register a new user.
+6. Log in http://localhost:8080/login aunthenticate user.
+7. Confirm new user exist in MySQL(SELECT * FROM users;)/
+
+# User Interface Diagram (Login & Registration Flow)
+
+## User Interface Diagram (Login & Registration Flow)
 
 ```mermaid
 flowchart TD
-    A[Home Page] --> B[Login Page]
-    A --> C[Register Page]
-    A --> D[Games Page]
+    A[User visits register page] --> B[Register Form]
+    B --> C{Valid Input?}
+    C -->|No| D[Show Validation Errors]
+    C -->|Yes| E[UserService register user]
+    E --> F[Save User to MySQL users table]
+    F --> G[Redirect to login page]
 
-    D --> E[Product Creation Page]
+    G --> H[Login Form]
+    H --> I{Credentials Valid?}
+    I -->|No| J[Show Login Error Message]
+    I -->|Yes| K[Redirect to Home Page]
 ```
----
-
-## Known Issues (Role 1 perspective)
-- Product data and Games page are not yet implemented (planned for future milestones).  
-- Images must be placed in the correct `/static/img` directory; incorrect paths may cause broken images.  
-- Footer readability depends on background contrast; adjusted with dark background fix, but may need further testing on different displays.  
-- Navbar active link highlighting may not always reflect correctly if new routes are added without updating `navbar.html`.  
-
 ---
 
 # CST-339 CLC Project — Milestone 3
@@ -326,3 +328,4 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 - When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
   - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
 - When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
+
