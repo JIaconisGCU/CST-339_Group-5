@@ -8,22 +8,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import com.gcu.cst339_group5.user.IUserStore;
 import com.gcu.cst339_group5.user.User;
+import com.gcu.cst339_group5.user.UserService;
 
 /**
  * Handles the /register flow:
  *  - GET  /register : show registration form
- *  - POST /register : validate and "save" (in memory for now), then redirect to login
+ *  - POST /register : validate and save to DB, then redirect to login
  */
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
 
-    private final IUserStore store;
+    private final UserService userService;
 
-    public RegisterController(IUserStore store) {
-        this.store = store;
+    // Constructor injection (Spring will auto-wire UserService)
+    public RegisterController(UserService userService) {
+        this.userService = userService;
     }
 
     /** Trim incoming String fields; convert empty strings to null */
@@ -50,23 +51,15 @@ public class RegisterController {
 
         model.addAttribute("pageTitle", "Register");
 
-        // Run uniqueness checks only if those fields passed basic validation
-        if (!result.hasFieldErrors("username") && store.usernameExists(user.getUsername())) {
-            result.rejectValue("username", "taken", "Username is already taken");
-        }
-        if (!result.hasFieldErrors("email") && store.emailExists(user.getEmail())) {
-            result.rejectValue("email", "taken", "Email is already registered");
-        }
-
-        // On any error, re-render form with messages
+        // Basic validation errors handled by annotations
         if (result.hasErrors()) {
             return "register";
         }
 
-        // Save to our dev store (plain password for Week 3)
-        store.save(user);
+        // Persist the new user in the database
+        userService.register(user);
 
-        // Redirect to login so session can be set after successful login
+        // Redirect to login so user can log in with new credentials
         return "redirect:/login?registered=1";
     }
 }
