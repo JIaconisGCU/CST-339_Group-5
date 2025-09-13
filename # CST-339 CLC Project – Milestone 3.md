@@ -96,8 +96,6 @@ WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'testuser');
 6. Log in http://localhost:8080/login aunthenticate user.
 7. Confirm new user exist in MySQL(SELECT * FROM users;)/
 
-# User Interface Diagram (Login & Registration Flow)
-
 ## User Interface Diagram (Login & Registration Flow)
 
 ```mermaid
@@ -328,4 +326,5 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 - When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
   - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
 - When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
+
 
