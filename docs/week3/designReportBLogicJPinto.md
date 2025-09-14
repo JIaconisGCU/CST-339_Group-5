@@ -1,6 +1,6 @@
-# CST-339 CLC Project — Week 3 Design Report
+# CST-339 CLC Project — Milestone 3
 **Project:** Video Game Library (Spring Boot, Thymeleaf)  
-**Role:** Business Logic Lead — Login & Registration (Dependency Injection)  
+**Role 2:** Business Logic Lead — Login & Registration (Dependency Injection)  
 **Student:** James Pinto  
 **Course:** CST-339 — Enterprise Applications Programming in Java  
 **Team:** Group 5 (CLC)  
@@ -17,7 +17,6 @@
 - Implemented session-based login state; logout clears session and redirects to `/login`.
 - Updated navbar to toggle Login/Register vs. user dropdown + Logout based on session.
 - Added success/error alerts to login page; page titles injected for layout.
-- Wrote Javadoc and inline comments; conducted peer review and captured notes.
 
 ---
 
@@ -39,12 +38,6 @@
 3. Refactor `LoginController` and `RegisterController` to use DI (constructor injection).
 4. Add Jakarta Validation to `User` and wire Thymeleaf error rendering.
 5. Adjust routes to absolute paths; update navbar and messages.
-6. Manual tests + peer review; write Javadoc; prepare screencast.
-
-### Scrum Artifacts (Summary)
-- **Sprint Goal:** Deliver DI-based login/registration with validation and demo.
-- **Daily Progress:** Interfaces → controllers → views/messages → tests → docs.
-- **Definition of Done:** All acceptance criteria met; code reviewed; screencast recorded; doc updated; branch merged via PR.
 
 ---
 
@@ -138,7 +131,7 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 ## Screencast & Repository
 
 ### Screencast URL
-> _[Add your screencast link here]_
+> _[Add our screencast link here]_
 
 ---
 
