@@ -45,9 +45,21 @@ public class GameAddController {
     @GetMapping("/new")
     public String showForm(Model model) {
         model.addAttribute("game", new Game());
-        return "games/game-add-form";
+        return "game-add-form";
     }
 
+    /**
+     * Lists all games stored in the database.
+     *
+     * @param model the {@link Model} containing all {@link Game} entities
+     * @return the Thymeleaf view for the games listing
+     */
+    @GetMapping
+    public String listGames(Model model) {
+        model.addAttribute("games", gameService.findAll());
+        return "games"; // templates/games/games.html
+    }
+    
     /**
      * Handles submission of the add game form.
      *
@@ -61,7 +73,7 @@ public class GameAddController {
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
-            return "games/game-add-form";
+            return "game-add-form";
         }
 
         // Save the game using the service layer

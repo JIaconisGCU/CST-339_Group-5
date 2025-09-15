@@ -45,6 +45,22 @@ public class Game {
     @PastOrPresent(message = "Release date cannot be in the future")
     @Column("release_date") // maps camelCase -> snake_case
     private LocalDate releaseDate;
+    
+    /** Optional genre (≤ 50 chars). */
+    @Size(max = 50, message = "Genre must be at most 50 characters")
+    private String genre;
+
+    /** Optional free-text description. */
+    @Size(max = 2000, message = "Description must be at most 2000 characters")
+    private String description;
+
+    /** Optional award (≤ 100 chars). */
+    @Size(max = 100, message = "Award must be at most 100 characters")
+    private String award;
+
+    /** Optional: which user created this record (FK to users.id). */
+    @Column("created_by_user_id")
+    private Long createdByUserId;
 
     // getters/setters
     public Long getId() { return id; }
@@ -61,4 +77,16 @@ public class Game {
 
     public LocalDate getReleaseDate() { return releaseDate; }
     public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
+    
+    public String getGenre() { return genre; }
+    public void setGenre(String genre) { this.genre = genre; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getAward() { return award; }
+    public void setAward(String award) { this.award = award; }
+
+    public Long getCreatedByUserId() { return createdByUserId; }
+    public void setCreatedByUserId(Long createdByUserId) { this.createdByUserId = createdByUserId; }
 }

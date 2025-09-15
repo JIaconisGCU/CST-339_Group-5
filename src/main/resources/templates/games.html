@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/common}">
+<head>
+  <title>Games</title>
+</head>
+<body>
+<section layout:fragment="content" class="container py-4">
+
+  <!-- Header / CTA -->
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="mb-0">Games Library</h1>
+    <a class="btn btn-teal" th:href="@{/games/new}">
+      + Add Game
+    </a>
+  </div>
+
+  <!-- Success alert (after add redirect) -->
+  <div th:if="${param.success}" class="alert alert-success" role="alert">
+    Game was added successfully.
+  </div>
+
+  <!-- Empty state -->
+  <div th:if="${#lists.isEmpty(games)}" class="text-center text-muted my-5">
+    <img src="/img/logo.png" alt="Video Game Library Logo" style="width:140px; opacity:0.9;">
+    <p class="mt-3">No games yet. Click “Add Game” to create your first entry.</p>
+  </div>
+
+  <!-- Table -->
+  <div th:if="${!#lists.isEmpty(games)}" class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Title</th>
+			  <th>Genre</th>
+			  <th>Award</th>
+              <th>Developer</th>
+              <th>Publisher</th>
+              <th>Release Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="g : ${games}">
+              <td th:text="${g.title}">Title</td>
+			  <td th:text="${g.genre}">Genre</td>
+			  <td th:text="${g.award}">Award</td>
+              <td th:text="${g.developer}">Developer</td>
+              <td th:text="${g.publisher}">Publisher</td>
+              <td th:text="${#temporals.format(g.releaseDate, 'yyyy-MM-dd')}">YYYY-MM-DD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Home -->
+  <div class="text-center mt-4">
+    <a class="btn btn-secondary" th:href="@{/}">Back to Home</a>
+  </div>
+
+</section>
+</body>
+</html>
