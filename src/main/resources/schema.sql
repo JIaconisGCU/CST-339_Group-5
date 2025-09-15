@@ -11,11 +11,12 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS games (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
-    genre VARCHAR(50)  NOT NULL,
-    year INT           NOT NULL,
+    genre VARCHAR(50),
     description TEXT,
     award VARCHAR(100),
-    -- Optional: track who created the game
+    developer VARCHAR(100) NOT NULL,
+    publisher VARCHAR(100) NOT NULL,
+    release_date DATE NOT NULL,
     created_by_user_id BIGINT,
     CONSTRAINT fk_games_user
         FOREIGN KEY (created_by_user_id) REFERENCES users(id)
