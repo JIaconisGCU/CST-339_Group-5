@@ -1,14 +1,21 @@
 package com.gcu.cst339_group5.user;
 
 import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.Id;  
+import org.springframework.data.relational.core.mapping.Table;
 
 /**
- * Simple registration User model used ONLY for form binding + validation.
- * No persistence annotations yet (DB comes later).
+ * User entity class for Registration + Login.
+ * Combines form validation with Spring Data JDBC persistence mapping.
  */
+@Table("users") // maps this class to the "users" table
 public class User {
 
     // --- BASIC PROFILE ---
+	
+	// --- PRIMARY KEY ---
+    @Id
+    private Long id; // Auto-generated in DB
 
     @NotBlank(message = "First name is required")
     @Size(max = 50, message = "First name must be at most 50 characters")
@@ -51,8 +58,27 @@ public class User {
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 72, message = "Password must be at least 8 characters")
     private String password;
+    
+ // --- Constructors ---
+    public User() {}
+
+    public User(Long id, String firstName, String lastName,
+                String email, String phone,
+                String username, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+        this.password = password;
+    }
+
 
     // --- Getters / Setters ---
+    
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

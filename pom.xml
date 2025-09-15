@@ -64,6 +64,23 @@
         <groupId>nz.net.ultraq.thymeleaf</groupId>
         <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
+    
+    <!-- Spring Boot Starter for Spring Data JDBC -->
+<!-- This brings in Spring Data JDBC, which gives us CrudRepository,
+     @Id, @Table, and other persistence annotations. -->
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jdbc</artifactId>
+	</dependency>
+	
+	<!-- MySQL JDBC Driver -->
+<!-- Allows Spring Boot to connect to a MySQL database -->
+	<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version> <!-- explicitly pinned version -->
+    <scope>runtime</scope>    <!-- only needed when app runs -->
+	</dependency>
 </dependencies>
 
 
