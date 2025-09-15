@@ -25,7 +25,7 @@
 |---------------------------------------------------------------------------|-------------|--------------|
 | User Module Refactor (Login + Registration)                               | Carlos      | 10           |  
 | Database scripts, ER diagram, documentation                               | James       | 8            |  
-| Product Creation Module Refactor (Game entity, repo, service, controller) | Justin.     | 9            |
+| Product Creation Module Refactor (Game entity, repo, service, controller) | Justin.     |              |
 
 
 ### Tools & Workflow  
