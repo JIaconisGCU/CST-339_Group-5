@@ -64,12 +64,11 @@
 		              placeholder="Short summary of the game"></textarea>
 		    <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
 		</div>
-
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Add Game</button>
-            <a class="btn btn-secondary" th:href="@{/games}">Cancel</a>
-        </div>
-
+		<!--Add Game Button-->
+		<div class="col-12 d-flex justify-content-between">
+		    <a class="btn btn-secondary" th:href="@{/games}">Cancel</a>
+		    <button class="btn btn-teal" type="submit">Add Game</button>
+		</div>
     </form>
 </section>
 </body>

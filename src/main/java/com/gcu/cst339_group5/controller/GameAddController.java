@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -82,4 +83,58 @@ public class GameAddController {
         // Redirect to new entry page with success flag
         return "redirect:/games/new?success";
     }
+    
+    /**
+     * Displays the edit form for an existing game.
+     *
+     * @param id    the ID of the game to edit
+     * @param model the model to which the {@link Game} object is added
+     * @return the Thymeleaf view for the edit game form
+     */
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Game game = gameService.getGameById(id);
+        if (game == null) {
+            return "redirect:/games"; // fallback if not found
+        }
+        model.addAttribute("game", game);
+        return "game-edit-form";
+    }
+    
+    /**
+     * Handles submission of the edit game form.
+     *
+     * @param game          the updated {@link Game} submitted by the user
+     * @param bindingResult contains validation results for the submitted form
+     * @param model         the model used to pass data back to the view
+     * @return redirect to the games list or form with errors
+     */
+    @PostMapping("/update")
+    public String updateGame(@Valid @ModelAttribute("game") Game game,
+                             BindingResult bindingResult,
+                             Model model) {
+        if (bindingResult.hasErrors()) {
+            return "game-edit-form";
+        }
+        gameService.updateGame(game);
+        return "redirect:/games";
+    }
+    
+    
+    /**
+     * Deletes an existing game by ID.
+     *
+     * @param id the ID of the {@link Game} to delete
+     * @param model the model (not used here, but included for consistency)
+     * @return redirect to the games list after deletion
+     */
+    @GetMapping("/delete/{id}")
+    public String deleteGame(@PathVariable("id") Long id, Model model) {
+        gameService.deleteGame(id);
+        return "redirect:/games";
+    }
+
+
+
+
 }

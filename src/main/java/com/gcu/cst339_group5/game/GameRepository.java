@@ -4,12 +4,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository interface for {@link Game} entities.
+ * Repository interface for {@link Game} persistence operations.
  * <p>
- * Extends {@link CrudRepository} to provide basic CRUD operations.
- * Spring Data JDBC automatically generates the implementation.
+ * Extends Spring Data's {@link CrudRepository} to provide basic CRUD
+ * functionality including save, find, update, and delete.
  * </p>
  */
 @Repository
 public interface GameRepository extends CrudRepository<Game, Long> {
+    // Additional custom query methods can be added here if needed
 }

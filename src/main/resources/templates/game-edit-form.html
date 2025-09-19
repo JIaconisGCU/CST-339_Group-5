@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/common}">
+<head>
+  <title>Edit Game</title>
+</head>
+<body>
+<section layout:fragment="content" class="container py-4">
+
+  <h1>Edit Game</h1>
+
+  <!-- Form -->
+  <form th:action="@{/games/update}" th:object="${game}" method="post" class="card p-4 shadow-sm">
+
+    <!-- Hidden ID -->
+    <input type="hidden" th:field="*{id}" />
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input type="text" th:field="*{title}" class="form-control" required />
+    </div>
+
+    <!-- Genre -->
+    <div class="mb-3">
+      <label class="form-label">Genre</label>
+      <input type="text" th:field="*{genre}" class="form-control" required />
+    </div>
+
+    <!-- Award -->
+    <div class="mb-3">
+      <label class="form-label">Award</label>
+      <input type="text" th:field="*{award}" class="form-control" />
+    </div>
+
+    <!-- Developer -->
+    <div class="mb-3">
+      <label class="form-label">Developer</label>
+      <input type="text" th:field="*{developer}" class="form-control" />
+    </div>
+
+    <!-- Publisher -->
+    <div class="mb-3">
+      <label class="form-label">Publisher</label>
+      <input type="text" th:field="*{publisher}" class="form-control" />
+    </div>
+
+    <!-- Release Date -->
+    <div class="mb-3">
+      <label class="form-label">Release Date</label>
+      <input type="date" th:field="*{releaseDate}" class="form-control" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between">
+      <a th:href="@{/games}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-success">Save Changes</button>
+    </div>
+
+  </form>
+
+</section>
+</body>
+</html>

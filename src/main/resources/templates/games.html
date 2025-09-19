@@ -29,28 +29,45 @@
   </div>
 
   <!-- Table -->
-  <div th:if="${!#lists.isEmpty(games)}" class="card shadow-sm">
+  <div class="card shadow-sm mt-4">
+    <div class="card-header bg-teal text-white">
+      Games List
+    </div>
     <div class="card-body p-0">
       <div class="table-responsive">
-        <table class="table table-hover mb-0 align-middle">
+        <table class="table table-striped table-hover mb-0 align-middle">
           <thead class="table-dark">
             <tr>
               <th>Title</th>
-			  <th>Genre</th>
-			  <th>Award</th>
+              <th>Genre</th>
+              <th>Award</th>
               <th>Developer</th>
               <th>Publisher</th>
               <th>Release Date</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr th:each="g : ${games}">
               <td th:text="${g.title}">Title</td>
-			  <td th:text="${g.genre}">Genre</td>
-			  <td th:text="${g.award}">Award</td>
+              <td th:text="${g.genre}">Genre</td>
+              <td th:text="${g.award}">Award</td>
               <td th:text="${g.developer}">Developer</td>
               <td th:text="${g.publisher}">Publisher</td>
               <td th:text="${#temporals.format(g.releaseDate, 'yyyy-MM-dd')}">YYYY-MM-DD</td>
+              <td>
+			    <!-- Edit Button -->
+			    <a th:href="@{/games/edit/{id}(id=${g.id})}" 
+			       class="btn btn-sm btn-primary">Edit</a>
+
+			    <!-- Delete Button -->
+			    <a th:href="@{/games/delete/{id}(id=${g.id})}" 
+			       class="btn btn-sm btn-danger"
+			       onclick="return confirm('Are you sure you want to delete this game?');">
+			       Delete
+			    </a>
+			  </td>
+
             </tr>
           </tbody>
         </table>
