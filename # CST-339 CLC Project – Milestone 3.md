@@ -98,28 +98,27 @@
    );
 
 
-## User Interface Diagram (Login & Registration Flow)
+## User Interface Diagram (Games CRUD Flow)
 
 ```mermaid
 flowchart TD
     A[User visits /games] --> B[Games Table]
     B -->|Click Add Game| C[Game Add Form]
-    C -->|Submit| D[GameService.save()]
-    D --> E[Save to MySQL (games table)]
+    C -->|Submit| D[GameService.save]
+    D --> E[Save to MySQL - games table]
     E --> F[Redirect to /games with success alert]
 
     B -->|Click Edit| G[Game Edit Form]
-    G -->|Submit| H[GameService.updateGame()]
+    G -->|Submit| H[GameService.updateGame]
     H --> I[Update in MySQL]
     I --> F[Redirect to /games with update alert]
 
     B -->|Click Delete| J[Confirm Delete Dialog]
-    J -->|Yes| K[GameService.deleteGame()]
+    J -->|Yes| K[GameService.deleteGame]
     K --> L[Delete from MySQL]
     L --> F[Redirect to /games with delete alert]
-
 ```
----
+
 
 # CST-339 CLC Project — Milestone 3
 **Project:** Video Game Library (Spring Boot, Thymeleaf)  
@@ -333,6 +332,7 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 - When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
   - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
 - When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
+
 
 
 
