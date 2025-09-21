@@ -1,4 +1,4 @@
-# CST-339 CLC Project – Milestone 4  
+# CST-339 CLC Project – Milestone 5 
 **Carlos Cortes Role 1: Presentation / UX Lead (assisting with Persistence Layer this Milestone)**
 
 ---
@@ -12,13 +12,39 @@
 - Configured **`application.properties`** to connect to MySQL (`videogamesdb` on port 8889).  
 - Fixed login redirect issue (now routes to `/` instead of `/home`).  
 - Tested end-to-end: user registration saves to DB and login authenticates correctly.  
+- **Milestone 5 Additions:**  
+  - Expanded `games.html` to display games in a styled Bootstrap table with **Edit/Delete** buttons.  
+  - Created new `game-edit-form.html` for updating existing games.  
+  - Updated **GameAddController** with new methods for edit, update, and delete.  
+  - Styled all buttons consistently (`btn-teal` for main actions, `btn-danger` for delete, `btn-secondary` for cancel).  
+  - Verified full CRUD cycle: add → list → edit → update → delete.   
 
 ---
 
 ## Planning Documentation (Role 1 perspective)
-- Carlos (Role 1 – Presentation/UX, assisting Persistence)** | - Refactored **User module** (Login + Registration) to Spring Data JDBC<br>- Created `UserRepository` and `UserService`<br>- Updated `RegisterController` and `LoginController` to use DB<br>- Added and tested `schema.sql` and `data.sql` (users table + test user)<br>- Fixed login redirect to `/` 
-**Teammate A (Role 2 – Business/Service Layer)** | - Refactor **Product Creation module** to Spring Data JDBC<br>- Create `Game` entity, `GameRepository`, and `GameService`<br>- Update `GameAddController` to save new products to DB<br>- Extend `schema.sql` to include `games` table<br>- Add sample game row in `data.sql` 
-**Teammate B (Role 3 – Database/Documentation)** | - Finalize **schema.sql** (both `users` and `games` tables)<br>- Add safe insert test data in `data.sql`<br>- Create and update **ER Diagram** (users + games)<br>- Provide **DDL scripts** for report<br>- Help update Design Report (technical decisions, risks, diagrams) 
+- **Carlos (Role 1 – Presentation/UX, assisting Persistence)**  
+  - Refactored **User module** to Spring Data JDBC  
+  - Created `UserRepository` and `UserService`  
+  - Updated controllers for DB  
+  - Added and tested `schema.sql` and `data.sql` (users table)  
+  - Fixed login redirect  
+  - **Milestone 5**: Expanded `games.html`, created `game-edit-form.html`, styled buttons, and verified CRUD cycle  
+
+- **Teammate A (Role 2 – Business/Service Layer)**  
+  - Refactored **Product Creation module** to Spring Data JDBC  
+  - Created `Game` entity, `GameRepository`, and `GameService`  
+  - Updated `GameAddController` to save new products  
+  - Extended `schema.sql` with `games` table  
+  - Added sample game row in `data.sql`  
+  - **Milestone 5**: Added `getGameById`, `updateGame`, and `deleteGame` in `GameService`  
+
+- **Teammate B (Role 3 – Database/Documentation)**  
+  - Finalized `schema.sql` (users + games)  
+  - Added safe insert test data in `data.sql`  
+  - Created/updated **ER Diagram** (users + games)  
+  - Provided **DDL scripts**  
+  - Helped update Design Report (technical decisions, risks, diagrams)  
+  - **Milestone 5**: Confirmed DB supports update/delete, updated design report with new wireframes  
 
 - **Workflow**:  
   - Each teammate developed in local branch.  
@@ -31,86 +57,67 @@
 
 ---
 
-## General Technical Approach (Updated from Milestones 1–3)
-- Application now integrates with **MySQL** via **Spring Data JDBC**.  
-- Entities (`User`, `Game`) annotated with `@Table` and `@Id` for persistence.  
-- Repositories extend `CrudRepository` to provide CRUD and custom query methods.  
-- Services (`UserService`, upcoming `GameService`) encapsulate business logic.  
+## General Technical Approach (Updated from Milestones 1–5)
+- Application integrates with **MySQL** via **Spring Data JDBC**.  
+- Entities (`User`, `Game`) annotated with `@Table` and `@Id`.  
+- Repositories extend `CrudRepository` for CRUD operations.  
+- Services (`UserService`, `GameService`) encapsulate business logic.  
 - `schema.sql` and `data.sql` initialize database schema and test data.  
-- **Milestone 4 Update**:  
-  - Refactored Login & Registration controllers to persist data in MySQL.  
-  - Configured `application.properties` for DB connection (port 8889).  
-  - Verified DB initialization and user persistence with MySQL Workbench. 
+- **Milestone 4 Update**: Refactored Login/Registration for persistence.  
+- **Milestone 5 Update**:  
+  - Added **Display module** (`games.html` now lists all games in a Bootstrap table).  
+  - Added **Update/Delete modules** (`game-edit-form.html`, controller and service methods for edit/update/delete).  
+  - Verified end-to-end CRUD: add, view, edit, update, delete. 
 
 ---
 
 ## Key Technical Design Decisions
-- Chose **Spring Data JDBC** (lighter than JPA/Hibernate) for simplified persistence mapping.  
-- Moved away from in-memory services (`InMemoryUserStore`, `SimpleRegistrationService`, `HardcodedAuthService`) → deleted to prevent confusion.  
-- Added `IF NOT EXISTS` to schema.sql to prevent app crash if tables already exist.  
-- Used safe insert in data.sql (`WHERE NOT EXISTS`) to avoid duplicate test user rows.  
-- Standardized redirect flow: Login success redirects to `/` where `HomeController` already handles root.  
+- Chose **Spring Data JDBC** for simplified persistence.  
+- Removed in-memory services to avoid confusion.  
+- Used safe `IF NOT EXISTS` in `schema.sql` to prevent errors.  
+- Added safe inserts in `data.sql` to avoid duplicate rows.  
+- Standardized button styling with **custom `btn-teal` class** for primary actions.  
+- Ensured **confirmation dialog** for delete to reduce accidental removals.  
 
 ---
 
-## Install / Configuration Instructions (for User module)
-1. Ensure dependencies exist in `pom.xml`:  
+## Install / Configuration Instructions (Games module additions)
+1. Ensure `GameRepository` extends `CrudRepository<Game, Long>`.  
+2. Confirm `schema.sql` contains:  
+   ```sql
+   CREATE TABLE IF NOT EXISTS games (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       title VARCHAR(100) NOT NULL,
+       genre VARCHAR(50),
+       award VARCHAR(100),
+       developer VARCHAR(100) NOT NULL,
+       publisher VARCHAR(100) NOT NULL,
+       release_date DATE NOT NULL,
+       description TEXT,
+       created_by_user_id BIGINT
+   );
 
-   ```xml
-   <!-- Spring Data JDBC -->
-   <dependency>
-       <groupId>org.springframework.boot</groupId>
-       <artifactId>spring-boot-starter-data-jdbc</artifactId>
-   </dependency>
-
-   <!-- MySQL Connector -->
-   <dependency>
-       <groupId>mysql</groupId>
-       <artifactId>mysql-connector-java</artifactId>
-       <version>8.0.33</version>
-       <scope>runtime</scope>
-   </dependency>
-2. Create MySQL database:
-```sql
-CREATE DATABASE videogamesbd;
-```
-3. Verify schema.sql exists in src/main/resources/:
-```sql
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(254) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(72) NOT NULL
-);
-```
-4. Verify data.sql exists in src/main/resources/:
-```sql
-INSERT INTO users (first_name, last_name, email, phone, username, password)
-SELECT 'Test', 'User', 'test@example.com', '123-456-7890', 'testuser', 'password123'
-WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'testuser');
-```
-5. Run the app http://localhost:8080/register register a new user.
-6. Log in http://localhost:8080/login aunthenticate user.
-7. Confirm new user exist in MySQL(SELECT * FROM users;)/
 
 ## User Interface Diagram (Login & Registration Flow)
 
 ```mermaid
 flowchart TD
-    A[User visits register page] --> B[Register Form]
-    B --> C{Valid Input?}
-    C -->|No| D[Show Validation Errors]
-    C -->|Yes| E[UserService register user]
-    E --> F[Save User to MySQL users table]
-    F --> G[Redirect to login page]
+    A[User visits /games] --> B[Games Table]
+    B -->|Click Add Game| C[Game Add Form]
+    C -->|Submit| D[GameService.save()]
+    D --> E[Save to MySQL (games table)]
+    E --> F[Redirect to /games with success alert]
 
-    G --> H[Login Form]
-    H --> I{Credentials Valid?}
-    I -->|No| J[Show Login Error Message]
-    I -->|Yes| K[Redirect to Home Page]
+    B -->|Click Edit| G[Game Edit Form]
+    G -->|Submit| H[GameService.updateGame()]
+    H --> I[Update in MySQL]
+    I --> F[Redirect to /games with update alert]
+
+    B -->|Click Delete| J[Confirm Delete Dialog]
+    J -->|Yes| K[GameService.deleteGame()]
+    K --> L[Delete from MySQL]
+    L --> F[Redirect to /games with delete alert]
+
 ```
 ---
 
@@ -326,5 +333,6 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 - When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
   - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
 - When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
+
 
 
