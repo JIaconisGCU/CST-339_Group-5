@@ -1,3 +1,4 @@
+# CST-339 CLC Project – Milestone 5 
 **Carlos Cortes Role 1: Presentation / UX Lead (assisting with Persistence Layer this Milestone)**
 
 ---
@@ -29,7 +30,7 @@
   - Fixed login redirect  
   - **Milestone 5**: Expanded `games.html`, created `game-edit-form.html`, styled buttons, and verified CRUD cycle  
 
-- **Teammate A (Role 2 – Business/Service Layer)**  
+- **Carlos+James (Role 2 – Business/Service Layer)**  
   - Refactored **Product Creation module** to Spring Data JDBC  
   - Created `Game` entity, `GameRepository`, and `GameService`  
   - Updated `GameAddController` to save new products  
@@ -37,7 +38,7 @@
   - Added sample game row in `data.sql`  
   - **Milestone 5**: Added `getGameById`, `updateGame`, and `deleteGame` in `GameService`  
 
-- **Teammate B (Role 3 – Database/Documentation)**  
+- **James Pinto (Role 3 – Database/Documentation)**  
   - Finalized `schema.sql` (users + games)  
   - Added safe insert test data in `data.sql`  
   - Created/updated **ER Diagram** (users + games)  
