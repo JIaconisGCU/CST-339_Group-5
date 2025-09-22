@@ -42,12 +42,33 @@
             <input class="form-control" th:field="*{publisher}" required>
             <div class="text-danger" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></div>
         </div>
+		
+		<!-- Genre (nullable) -->
+		<div class="col-md-6">
+		    <label class="form-label">Genre</label>
+		    <input class="form-control" th:field="*{genre}" placeholder="RPG, FPS, Action/Adventure">
+		    <div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+		</div>
 
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Add Game</button>
-            <a class="btn btn-secondary" th:href="@{/games}">Cancel</a>
-        </div>
+		<!-- Award (nullable) -->
+		<div class="col-md-6">
+		    <label class="form-label">Award</label>
+		    <input class="form-control" th:field="*{award}" placeholder="Game of the Year 2017">
+		    <div class="text-danger" th:if="${#fields.hasErrors('award')}" th:errors="*{award}"></div>
+		</div>
 
+		<!-- Description (nullable) -->
+		<div class="col-12">
+		    <label class="form-label">Description</label>
+		    <textarea class="form-control" th:field="*{description}" rows="3"
+		              placeholder="Short summary of the game"></textarea>
+		    <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+		</div>
+		<!--Add Game Button-->
+		<div class="col-12 d-flex justify-content-between">
+		    <a class="btn btn-secondary" th:href="@{/games}">Cancel</a>
+		    <button class="btn btn-teal" type="submit">Add Game</button>
+		</div>
     </form>
 </section>
 </body>
