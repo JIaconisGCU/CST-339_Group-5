@@ -81,6 +81,19 @@
     <version>8.0.33</version> <!-- explicitly pinned version -->
     <scope>runtime</scope>    <!-- only needed when app runs -->
 	</dependency>
+	
+	<!-- Spring Security -->
+	<dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
+
+	<!-- For password hashing -->
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-crypto</artifactId>
+	</dependency>
+
 </dependencies>
 
 

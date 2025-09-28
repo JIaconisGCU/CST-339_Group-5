@@ -9,8 +9,23 @@
 <body>
 <section layout:fragment="content">
     <h2>Login</h2>	
-	<div th:if="${param.registered}" class="alert alert-success">Account created. Please log in.</div>
-	<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <!-- Success message after registration -->
+    <div th:if="${param.registered}" class="alert alert-success">
+        Account created. Please log in.
+    </div>
+
+    <!-- Error message if login fails -->
+    <div th:if="${param.error}" class="alert alert-danger">
+        Invalid username or password.
+    </div>
+
+    <!-- Logout confirmation -->
+    <div th:if="${param.logout}" class="alert alert-info">
+        You have been logged out.
+    </div>
+
+    <!-- Login form handled by Spring Security -->
     <form th:action="@{/login}" method="post">
         <input type="text" name="username" placeholder="Username" required />
         <input type="password" name="password" placeholder="Password" required />

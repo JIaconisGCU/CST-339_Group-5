@@ -1,7 +1,9 @@
 package com.gcu.cst339_group5.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.crypto.password.PasswordEncoder;   //  NEW import
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,10 @@ import com.gcu.cst339_group5.user.UserService;
 public class RegisterController {
 
     private final UserService userService;
+
+    // Inject PasswordEncoder from SecurityConfig
+    @Autowired
+    private PasswordEncoder passwordEncoder;   // ⬅️ NEW field
 
     // Constructor injection (Spring will auto-wire UserService)
     public RegisterController(UserService userService) {
@@ -55,6 +61,9 @@ public class RegisterController {
         if (result.hasErrors()) {
             return "register";
         }
+
+        // ✅ Encode the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Persist the new user in the database
         userService.register(user);
