@@ -1,123 +1,110 @@
-# CST-339 CLC Project – Milestone 5 
-**Carlos Cortes Role 1: Presentation / UX Lead (assisting with Persistence Layer this Milestone)**
+# CST-339 CLC Project – Milestone 6  
+**Carlos Cortes Role 1: Presentation / UX Lead (assisting with Security Configuration this Milestone)**  
 
 ---
 
-## Cover Page – Tasks Completed by Role 1
-- Refactored **User module** (Login + Registration) to use **Spring Data JDBC** instead of in-memory services.  
-- Added **`UserRepository`** (CrudRepository) and **`UserService`** for persistence.  
-- Updated **`RegisterController`** and **`LoginController`** to use the new service.  
-- Created and verified **`schema.sql`** for automatic table creation (`users` table).  
-- Created **`data.sql`** with a safe test user for login validation.  
-- Configured **`application.properties`** to connect to MySQL (`videogamesdb` on port 8889).  
-- Fixed login redirect issue (now routes to `/` instead of `/home`).  
-- Tested end-to-end: user registration saves to DB and login authenticates correctly.  
-- **Milestone 5 Additions:**  
-  - Expanded `games.html` to display games in a styled Bootstrap table with **Edit/Delete** buttons.  
-  - Created new `game-edit-form.html` for updating existing games.  
-  - Updated **GameAddController** with new methods for edit, update, and delete.  
-  - Styled all buttons consistently (`btn-teal` for main actions, `btn-danger` for delete, `btn-secondary` for cancel).  
-  - Verified full CRUD cycle: add → list → edit → update → delete.   
+## Cover Page – Tasks Completed by Role 1  
+- Added **Spring Security dependencies** (`spring-boot-starter-security` + `spring-security-crypto`) to `pom.xml`.  
+- Created **`SecurityConfig.java`** to define authentication rules:  
+  - Public pages → `/login`, `/register`, `/error`, `/css/**`, `/images/**`.  
+  - All other routes secured by authentication.  
+  - Configured **form-based login** (custom Thymeleaf `login.html`) and logout handling.  
+  - Defined **`PasswordEncoder` bean (BCrypt)** for secure password storage.  
+- Implemented **`CustomUserDetailsService.java`** to load users from the MySQL `users` table for authentication.  
+- Updated **`RegisterController`** to hash passwords with BCrypt before saving to DB.  
+- Updated **`login.html`** to support Spring Security login flow, error messages, and logout confirmation.  
+- Verified that:  
+  - Access to `/games` without login redirects to `/login`.  
+  - Registration creates a DB record with a hashed password.  
+  - Successful login grants access to secured pages.  
+  - Logout redirects back to `/login?logout`.  
 
 ---
 
-## Planning Documentation (Role 1 perspective)
-- **Carlos (Role 1 – Presentation/UX, assisting Persistence)**  
-  - Refactored **User module** to Spring Data JDBC  
-  - Created `UserRepository` and `UserService`  
-  - Updated controllers for DB  
-  - Added and tested `schema.sql` and `data.sql` (users table)  
-  - Fixed login redirect  
-  - **Milestone 5**: Expanded `games.html`, created `game-edit-form.html`, styled buttons, and verified CRUD cycle  
+## Planning Documentation (Role 1 perspective)  
+- **Carlos (Role 1 – Presentation/UX, assisting Security)**  
+  - Added Spring Security dependencies.  
+  - Built `SecurityConfig.java` with authentication rules, login/logout config, and BCrypt.  
+  - Created `CustomUserDetailsService.java` to connect `UserRepository` with Spring Security.  
+  - Updated `RegisterController` to hash passwords before saving.  
+  - Updated `login.html` for Spring Security error/logout handling.  
 
 - **Teammate A (Role 2 – Business/Service Layer)**  
-  - Refactored **Product Creation module** to Spring Data JDBC  
-  - Created `Game` entity, `GameRepository`, and `GameService`  
-  - Updated `GameAddController` to save new products  
-  - Extended `schema.sql` with `games` table  
-  - Added sample game row in `data.sql`  
-  - **Milestone 5**: Added `getGameById`, `updateGame`, and `deleteGame` in `GameService`  
+  - Assisted in wiring service methods with Security.  
+  - Verified that login/logout routes align with service layer.  
+  - Helped test new login flow with DB users.  
 
 - **Teammate B (Role 3 – Database/Documentation)**  
-  - Finalized `schema.sql` (users + games)  
-  - Added safe insert test data in `data.sql`  
-  - Created/updated **ER Diagram** (users + games)  
-  - Provided **DDL scripts**  
-  - Helped update Design Report (technical decisions, risks, diagrams)  
-  - **Milestone 5**: Confirmed DB supports update/delete, updated design report with new wireframes  
+  - Updated **schema.sql** to ensure users table supports login.  
+  - Helped confirm hashed passwords save correctly.  
+  - Updated Design Report (technical approach, key decisions, risks).  
+  - Added Security Design section (public vs. secure pages, authentication flow).  
 
 - **Workflow**:  
-  - Each teammate developed in local branch.  
-  - All code merged to `development` branch on GitHub.  
-  - Merge conflicts were resolved, prioritizing:  
-    - Role 1 for layout/UI code.  
-    - Role 2 & 3 for Registration/Login controllers. 
-
-- **Peer review**: teammates reviewed layout changes and tested in browsers before merging.  
+  - Role 1 handled Spring Security configuration + UI updates.  
+  - Role 2 assisted with service integration.  
+  - Role 3 focused on DB validation + documentation.  
+  - Peer review confirmed authentication + redirects worked before merge.  
 
 ---
 
-## General Technical Approach (Updated from Milestones 1–5)
+## General Technical Approach (Updated from Milestones 1–6)  
 - Application integrates with **MySQL** via **Spring Data JDBC**.  
-- Entities (`User`, `Game`) annotated with `@Table` and `@Id`.  
+- Entities (`User`, `Game`) mapped to relational tables.  
 - Repositories extend `CrudRepository` for CRUD operations.  
-- Services (`UserService`, `GameService`) encapsulate business logic.  
-- `schema.sql` and `data.sql` initialize database schema and test data.  
-- **Milestone 4 Update**: Refactored Login/Registration for persistence.  
-- **Milestone 5 Update**:  
-  - Added **Display module** (`games.html` now lists all games in a Bootstrap table).  
-  - Added **Update/Delete modules** (`game-edit-form.html`, controller and service methods for edit/update/delete).  
-  - Verified end-to-end CRUD: add, view, edit, update, delete. 
+- Services encapsulate business logic.  
+- **Milestone 6 Update**:  
+  - Integrated **Spring Security** for login protection.  
+  - All pages (except login, register, error) require authentication.  
+  - Used **BCrypt hashing** for secure password storage.  
+  - Built `CustomUserDetailsService` for DB-backed authentication.  
+  - Updated `login.html` and `RegisterController` for Spring Security.  
 
 ---
 
-## Key Technical Design Decisions
-- Chose **Spring Data JDBC** for simplified persistence.  
-- Removed in-memory services to avoid confusion.  
-- Used safe `IF NOT EXISTS` in `schema.sql` to prevent errors.  
-- Added safe inserts in `data.sql` to avoid duplicate rows.  
-- Standardized button styling with **custom `btn-teal` class** for primary actions.  
-- Ensured **confirmation dialog** for delete to reduce accidental removals.  
+## Key Technical Design Decisions  
+- Chose **Spring Security form-based authentication** for simplicity and built-in security features.  
+- Used **BCryptPasswordEncoder** to hash passwords before persistence.  
+- Applied **role-based access (default USER role)** for future scalability.  
+- Secured all endpoints except login, register, and error.  
+- Updated login flow to use Spring Security parameters (`?error`, `?logout`, `?registered`).  
 
 ---
 
-## Install / Configuration Instructions (Games module additions)
-1. Ensure `GameRepository` extends `CrudRepository<Game, Long>`.  
-2. Confirm `schema.sql` contains:  
-   ```sql
-   CREATE TABLE IF NOT EXISTS games (
-       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-       title VARCHAR(100) NOT NULL,
-       genre VARCHAR(50),
-       award VARCHAR(100),
-       developer VARCHAR(100) NOT NULL,
-       publisher VARCHAR(100) NOT NULL,
-       release_date DATE NOT NULL,
-       description TEXT,
-       created_by_user_id BIGINT
-   );
+## Install / Configuration Instructions (Security Module Additions)  
+1. Add dependencies to `pom.xml`:  
+   ```xml
+   <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-security</artifactId>
+   </dependency>
+   <dependency>
+       <groupId>org.springframework.security</groupId>
+       <artifactId>spring-security-crypto</artifactId>
+   </dependency>
+2. Create SecurityConfig.java in com.gcu.cst339_group5.security.
+3. Create CustomUserDetailsService.java in com.gcu.cst339_group5.security.
+4. Update RegisterController to encode passwords with BCrypt before saving.
+5. Update login.html to support Spring Security login/logout/error handling.
+6. Run application → test login flow.
 
+---
 
-## User Interface Diagram (Games CRUD Flow)
+## User Interface Diagram (Login Security Flow)
 
 ```mermaid
+
 flowchart TD
-    A[User visits /games] --> B[Games Table]
-    B -->|Click Add Game| C[Game Add Form]
-    C -->|Submit| D[GameService.save]
-    D --> E[Save to MySQL - games table]
-    E --> F[Redirect to /games with success alert]
+    A[User visits /games] --> B{Authenticated?}
+    B -->|No| C["Redirect to /login"]
+    C -->|Submit valid credentials| D["Check DB via CustomUserDetailsService"]
+    D -->|Success| E["Access /games page"]
+    D -->|Failure| F["Redirect to /login (error)"]
+    E -->|Click Logout| G["Spring Security logout"]
+    G --> H["Redirect to /login (logout)"]
 
-    B -->|Click Edit| G[Game Edit Form]
-    G -->|Submit| H[GameService.updateGame]
-    H --> I[Update in MySQL]
-    I --> F[Redirect to /games with update alert]
-
-    B -->|Click Delete| J[Confirm Delete Dialog]
-    J -->|Yes| K[GameService.deleteGame]
-    K --> L[Delete from MySQL]
-    L --> F[Redirect to /games with delete alert]
 ```
+---
 
 
 # CST-339 CLC Project — Milestone 3
@@ -332,6 +319,7 @@ Key classes and methods include Javadoc summaries and parameter/return tags wher
 - When databases are implemented and the hardcoded services and components (such as authentication and user storage) are replaced, the new database-based methods should have the `@Primary` annotation
   - The old methods should have `@Qualifier` annotations that let them be used in specific circumstances, like testing
 - When submitting a game via the form page, the browser should be redirected to that new entry in the library (once the library container is implemented)
+
 
 
 
