@@ -3,6 +3,7 @@ package com.gcu.cst339_group5.user;
 import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.Id;  
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.Column;
 
 /**
  * User entity class for Registration + Login.
@@ -31,6 +32,13 @@ public class User {
     @Email(message = "Enter a valid email address")
     @Size(max = 254, message = "Email is too long")
     private String email;
+    
+    // --- SECURITY FIELDS ---
+    @Column("role")
+    private String role = "ROLE_USER";   // Spring Security convention
+
+    @Column("enabled")
+    private Boolean enabled = true;      // allow login unless disabled
 
     /**
      * US-style formats allowed:
@@ -52,7 +60,7 @@ public class User {
     private String username;
 
     /**
-     * Plain text here ONLY for the prototype. In real auth we’ll hash with BCrypt.
+     * Now stored as a BCrypt hash (not plain text).
      * 8+ chars keeps it simple for the assignment.
      */
     @NotBlank(message = "Password is required")
@@ -64,7 +72,9 @@ public class User {
 
     public User(Long id, String firstName, String lastName,
                 String email, String phone,
-                String username, String password) {
+                String username, String password, 
+                String role, Boolean enable) {
+    	
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,6 +82,8 @@ public class User {
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.role = (role != null ? role : "ROLE_USER");
+        this.enabled = (enabled != null ? enabled : true);
     }
 
 
@@ -97,4 +109,11 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+    
+    public Boolean getEnabled() { return enabled; }
+    public void setEnabled(Boolean enabled) { this.enabled = enabled; }
+    }
 }
