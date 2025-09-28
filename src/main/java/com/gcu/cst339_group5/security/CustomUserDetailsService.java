@@ -38,8 +38,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Wrap our User entity into Spring Security's UserDetails object.
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword()) // Must already be encoded with BCrypt
-                .roles("USER") // Default role for now
+                .password(user.getPassword()) // BCrypt from DB
+                .authorities(user.getRole()) // e.g., ROLE_USER or ROLE_ADMIN
+                .disabled(Boolean.FALSE.equals(user.getEnabled()) ? false : !user.getEnabled())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
                 .build();
     }
 }
