@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Long> {
 	// Custom query method
 	User findByUsername(String username);
+	// Added helper for registration checks to use in controller/service
+	//     instead of fetching.
+	boolean existsByUsername(String username);
 }
