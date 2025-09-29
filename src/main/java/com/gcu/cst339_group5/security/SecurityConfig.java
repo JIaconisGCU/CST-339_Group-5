@@ -2,7 +2,8 @@ package com.gcu.cst339_group5.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,8 +22,22 @@ public class SecurityConfig {
      * This ensures passwords are stored in the DB securely (never plain text).
      */
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    /**
+     * Authentication provider that tells Spring Security to use our CustomUserDetailsService + BCrypt
+     */
+    @Bean
+    AuthenticationManager authManager(HttpSecurity http,
+            PasswordEncoder encoder,
+            CustomUserDetailsService uds) throws Exception {
+    	return http.getSharedObject(AuthenticationManagerBuilder.class)
+    			.userDetailsService(uds)     // load users from DB
+    			.passwordEncoder(encoder)    // check passwords using BCrypt
+    			.and()
+    			.build();
     }
 
     /**
@@ -32,17 +47,24 @@ public class SecurityConfig {
      * - Uses form-based login with custom login page (login.html).
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    	
+    	http
+    	    .csrf(csrf -> csrf
+    		    .ignoringRequestMatchers("/login")  // TEMP: allow POST /login without CSRF
+    		)
             // Authorization rules
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/register", "/error", "/css/**", "/images/**").permitAll()
+            	// public pages (no login required)
+                .requestMatchers("/login", "/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                // Everything else requires authentication
                 .anyRequest().authenticated()
             )
             // Login configuration
             .formLogin(form -> form
                 .loginPage("/login")                // custom Thymeleaf login page
                 .defaultSuccessUrl("/games", true)  // where to go after successful login
+                .failureUrl("/login?error") // redirect after failed login
                 .permitAll()
             )
             // Logout configuration

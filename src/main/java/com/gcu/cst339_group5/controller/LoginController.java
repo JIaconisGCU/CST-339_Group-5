@@ -7,7 +7,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.gcu.cst339_group5.user.User;
-import com.gcu.cst339_group5.user.UserService;
 
 /**
  * Handles the /login flow:
@@ -17,13 +16,6 @@ import com.gcu.cst339_group5.user.UserService;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-
-    private final UserService userService;
-
-    // Constructor injection
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
 
     /** Trim incoming String fields; convert empty strings to null */
     @InitBinder
@@ -39,21 +31,5 @@ public class LoginController {
             model.addAttribute("user", new User());
         }
         return "login";
-    }
-
-    // Process login submission
-    @PostMapping
-    public String process(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("pageTitle", "Login");
-
-        // Attempt login
-        User existingUser = userService.login(user.getUsername(), user.getPassword());
-
-        if (existingUser != null) {
-            return "redirect:/";  // ✅ root path, handled by HomeController
-        } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login";
-        }
     }
 }

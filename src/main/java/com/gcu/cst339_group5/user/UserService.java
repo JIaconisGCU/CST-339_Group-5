@@ -31,20 +31,6 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-	/**
-	 * Attempt to log in by username + password
-	 * @param username login username
-	 * @param password login password (plain text for now)
-	 * @return matching User if credential are valid, else null
-	 */
-	public User login(String username, String password) {
-		User found = userRepository.findByUsername(username);
-		if(found != null && found.getPassword().equals(password)) {
-			return found;
-		}
-		return null;
-	}
-	
 	public boolean credentialsValid(String username, String rawPassword) {
 		User found = userRepository.findByUsername(username);
 		return (found != null) && encoder.matches(rawPassword, found.getPassword());
