@@ -1,6 +1,7 @@
-INSERT INTO users (first_name, last_name, email, phone, username, password)
-SELECT 'Test', 'User', 'test@example.com', '123-456-7890', 'testuser', 'password123'
-WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'testuser');
+DELETE FROM users WHERE username = 'testuser';
+
+INSERT INTO users (first_name, last_name, email, phone, username, password, role, enabled)
+VALUES ('Test', 'User', 'test@example.com', '123-456-7890', 'testuser', '$2a$10$2Q9D3tWc5q0u8c3Q8Wz6EOP4pM0o4e0bivzv7xN3/3E8M6oPj0e4W', 'ROLE_USER', TRUE);
 -- === SAMPLE GAMES ===
 INSERT INTO games (title, genre, description, award, developer, publisher, release_date)
 SELECT 'The Witcher 3: Wild Hunt','RPG','Story-driven open-world RPG','Game of the Year 2015','CD Projekt Red','CD Projekt','2015-05-19'
