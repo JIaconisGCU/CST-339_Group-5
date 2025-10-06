@@ -3,6 +3,7 @@ package com.gcu.cst339_group5.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,8 @@ public class SecurityConfig {
      * Authentication provider that tells Spring Security to use our CustomUserDetailsService + BCrypt
      */
     @Bean
-    AuthenticationManager authManager(HttpSecurity http,
+    AuthenticationManager authManager(
+    		HttpSecurity http,
             PasswordEncoder encoder,
             CustomUserDetailsService uds) throws Exception {
     	return http.getSharedObject(AuthenticationManagerBuilder.class)
@@ -57,6 +59,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             	// public pages (no login required)
                 .requestMatchers("/login", "/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                // secure all REST endpoints with basic auth
+                .requestMatchers("/api/**").authenticated()
                 // Everything else requires authentication
                 .anyRequest().authenticated()
             )
@@ -71,7 +75,9 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .logoutSuccessUrl("/login?logout")  // redirect after logout
                 .permitAll()
-            );
+            )
+            
+            .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
