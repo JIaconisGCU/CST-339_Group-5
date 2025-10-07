@@ -149,6 +149,7 @@ flowchart TD
 
 | User Story | Team Member | Hours Worked | Hours Remaining |
 |-------------|--------------|---------------|----------------|
-| Implement secured REST API endpoints (GET /api/games) | James Pinto | 5 | 0 |
+| Implement secured REST API endpoints (GET /api/games) | James Pinto | 6 | 0 |
 | Test authentication and fix DB schema (role, enabled columns) | Carlos Cortes | 1.5 | 0 |
 | Document security and API design in Markdown report | Carlos Cortes | 2 | 0 |
+
