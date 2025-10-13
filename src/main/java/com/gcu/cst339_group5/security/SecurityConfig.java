@@ -58,7 +58,8 @@ public class SecurityConfig {
             // Authorization rules
             .authorizeHttpRequests(auth -> auth
             	// public pages (no login required)
-                .requestMatchers("/login", "/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/login", "/register", "/error", "/css/**",
+                		"/js/**", "/images/**").permitAll()
                 // secure all REST endpoints with basic auth
                 .requestMatchers("/api/**").authenticated()
                 // Everything else requires authentication
@@ -73,7 +74,11 @@ public class SecurityConfig {
             )
             // Logout configuration
             .logout(logout -> logout
+            	.logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")  // redirect after logout
+                .deleteCookies("JSESSIONID") // make sure cookie is gone
+                .invalidateHttpSession(true) // session invalidated
+                .clearAuthentication(true)
                 .permitAll()
             )
             
