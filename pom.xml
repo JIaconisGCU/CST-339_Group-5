@@ -53,17 +53,21 @@
         <scope>test</scope>
     </dependency>
 
-    <!-- ✅ keep teammate’s validation dependency -->
+    <!-- keep teammate’s validation dependency -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
-    <!-- ✅ keep your layout dialect dependency -->
+    <!-- keep layout dialect dependency -->
     <dependency>
         <groupId>nz.net.ultraq.thymeleaf</groupId>
         <artifactId>thymeleaf-layout-dialect</artifactId>
     </dependency>
+    <dependency>
+  		<groupId>org.thymeleaf.extras</groupId>
+  		<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+	</dependency>
     
     <!-- Spring Boot Starter for Spring Data JDBC -->
 <!-- This brings in Spring Data JDBC, which gives us CrudRepository,
